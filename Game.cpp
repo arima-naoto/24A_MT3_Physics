@@ -35,14 +35,14 @@ void Game::Initialize() {
 	mouse = { 0,0 };
 
 	spring_ = {
-		.anchor = { 0,0,0 },
-	    .naturalLenght = 1.0f,
+		.anchor = { 0,1,0 },
+	    .naturalLenght = 0.7f,
 	    .stiffness = 100.0f,
 		.dampingCoefficient = 2.0f
 	};
 
 	ball_ = {
-		.position = {1.2f,0.0f,0.0f},
+		.position = {0.8f,0.2f,0.0f},
 		.mass = 2.0f,
 		.radius = 0.05f,
 		.color = BLUE
@@ -172,24 +172,28 @@ void Game::MoveSpring(Spring& spring, Ball& ball) {
 	
 	float length = Calculator::Length(diff);
 
-	if (isSpring == true) {
-		
-		if (length != 0.0f) {
-			Vector3 direction = Calculator::Normalize(diff);
-			Vector3 restPosition = spring.anchor + direction * spring.naturalLenght;
-			Vector3 displacement = length * (ball.position - restPosition);
-			Vector3 restoringForce = -spring.stiffness * displacement;
-			Vector3 dampingForce = -spring.dampingCoefficient * ball.velocity;
-			Vector3 force = restoringForce + dampingForce;
-			ball.acceletation = force / ball.mass;
-		}
+	const Vector3 kGravity = { 0.0f,-9.8f,0.0f };
+
+	if (isSpring == true && length != 0.0f) {
+
+		Vector3 direction = Calculator::Normalize(diff);
+
+		Vector3 restPosition = spring.anchor + direction * spring.naturalLenght;
+
+		Vector3 displacement = length * (ball.position - restPosition);
+
+		Vector3 restoringForce = -spring.stiffness * displacement;
+
+		Vector3 dampingForce = -spring.dampingCoefficient * ball.velocity;
+
+		Vector3 force = restoringForce + dampingForce + kGravity;
+
+		ball.acceletation = force / ball.mass;
 
 	}
 	else {
 		return;
 	}
-
-	
 	
 	float deltaTime = 1.f / 60.f;
 
