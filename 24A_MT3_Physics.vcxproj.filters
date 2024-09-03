@@ -14,6 +14,15 @@
     <Filter Include="KamataEngine\Adapter">
       <UniqueIdentifier>{c6468eb4-788b-4a83-b207-a5f4804e56c5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="GameMain">
+      <UniqueIdentifier>{554737e9-7ca3-443d-ad1b-66c1f0c2f329}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameMain\cpp.file">
+      <UniqueIdentifier>{fd9443d1-bcfe-4401-ba72-d53fdc9fc745}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameMain\header.file">
+      <UniqueIdentifier>{56104ab1-58df-420f-b842-f16da0556b25}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="C:\KamataEngine\DirectXGame\base\DirectXCommon.cpp">
@@ -37,6 +46,27 @@
     </ClCompile>
     <ClCompile Include="C:\KamataEngine\DirectXGame\base\StringUtility.cpp">
       <Filter>KamataEngine\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Arithmetic.cpp">
+      <Filter>GameMain\cpp.file</Filter>
+    </ClCompile>
+    <ClCompile Include="Calculator.cpp">
+      <Filter>GameMain\cpp.file</Filter>
+    </ClCompile>
+    <ClCompile Include="Graphics.cpp">
+      <Filter>GameMain\cpp.file</Filter>
+    </ClCompile>
+    <ClCompile Include="Rendering.cpp">
+      <Filter>GameMain\cpp.file</Filter>
+    </ClCompile>
+    <ClCompile Include="Camera.cpp">
+      <Filter>GameMain\cpp.file</Filter>
+    </ClCompile>
+    <ClCompile Include="World.cpp">
+      <Filter>GameMain\cpp.file</Filter>
+    </ClCompile>
+    <ClCompile Include="Game.cpp">
+      <Filter>GameMain\cpp.file</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -110,6 +140,30 @@
     <ClInclude Include="C:\KamataEngine\DirectXGame\2d\ImGuiManager.h" />
     <ClInclude Include="C:\KamataEngine\DirectXGame\base\StringUtility.h">
       <Filter>KamataEngine\Include</Filter>
+    </ClInclude>
+    <ClInclude Include="Arithmetic.h">
+      <Filter>GameMain\header.file</Filter>
+    </ClInclude>
+    <ClInclude Include="Calculator.h">
+      <Filter>GameMain\header.file</Filter>
+    </ClInclude>
+    <ClInclude Include="Graphics.h">
+      <Filter>GameMain\header.file</Filter>
+    </ClInclude>
+    <ClInclude Include="MyStruct.h">
+      <Filter>GameMain\header.file</Filter>
+    </ClInclude>
+    <ClInclude Include="Rendering.h">
+      <Filter>GameMain\header.file</Filter>
+    </ClInclude>
+    <ClInclude Include="Camera.h">
+      <Filter>GameMain\header.file</Filter>
+    </ClInclude>
+    <ClInclude Include="World.h">
+      <Filter>GameMain\header.file</Filter>
+    </ClInclude>
+    <ClInclude Include="Game.h">
+      <Filter>GameMain\header.file</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
