@@ -3,11 +3,11 @@
 #include "Camera.h"
 #include "Graphics.h"
 
+#include "memory"
+
 class Game : public Graphics
 {
 public:
-
-	~Game();
 
 	void Initialize();
 
@@ -36,10 +36,10 @@ public:
 private:
 
 	Affine worldAffine_;
-	World* world_;
+	std::unique_ptr<World> world_ = nullptr;
 
 	Affine cameraAffine_;
-	Camera* camera_;
+	std::unique_ptr<Camera> camera_ = nullptr;
 
 	Vector2 prevMouse;
 	Vector2 mouse;
