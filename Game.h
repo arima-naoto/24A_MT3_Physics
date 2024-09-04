@@ -4,6 +4,7 @@
 #include "Graphics.h"
 
 #include "memory"
+using namespace std;
 
 class Game : public Graphics
 {
@@ -36,10 +37,10 @@ public:
 private:
 
 	Affine worldAffine_;
-	std::unique_ptr<World> world_ = nullptr;
+	unique_ptr<World> world_ = nullptr;
 
 	Affine cameraAffine_;
-	std::unique_ptr<Camera> camera_ = nullptr;
+	unique_ptr<Camera> camera_ = nullptr;
 
 	Vector2 prevMouse;
 	Vector2 mouse;

@@ -14,7 +14,7 @@ void Game::Initialize() {
 		.translate{0,0,0}
 	};
 
-	world_ = std::make_unique<World>();
+	world_ = make_unique<World>();
 	world_->Initialize(worldAffine_);
 
 
@@ -24,7 +24,7 @@ void Game::Initialize() {
 		.translate{ 0.0f,0.2f,-6.77f }
 	};
 
-	camera_ = std::make_unique<Camera>();
+	camera_ = make_unique<Camera>();
 	camera_->Initialize(cameraAffine_);
 
 	prevMouse = { 0,0 };
