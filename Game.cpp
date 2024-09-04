@@ -139,8 +139,7 @@ void Game::MoveScale(Affine& camera) {
 	int32_t wheel = Novice::GetWheel();
 
 	camera.scale.z += (wheel / (1024.f * 2.f));
-	camera.scale.z = (std::max)(camera.scale.z, 0.5f);
-	camera.scale.z = (std::min)(camera.scale.z, 1.0f);
+	camera.scale.z = std::clamp(camera.scale.z, 0.5f, 1.0f);
 
 }
 
