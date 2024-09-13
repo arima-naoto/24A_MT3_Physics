@@ -29,7 +29,7 @@ public:
 
 	static Matrix4x4 ViewportMatrix(float left, float top, float width, float height, float minDepth, float maxDepth);
 
-	static Vector3 Transform(const Vector3& vector, const Matrix4x4& matrix4x4);
+	static Vector3 Transform(const Vector3& vector, const Matrix4x4& matrix);
 
 };
 

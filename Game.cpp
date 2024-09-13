@@ -1,8 +1,13 @@
 #define NOMINMAX
 #include "Game.h"
 #include "algorithm"
-#include "imgui.h"
 #include "Calculator.h"
+
+#ifdef _DEBUG
+#include <imgui.h>
+using namespace ImGui;
+#endif // _DEBUG
+
 
 #define GRAY 0xAAAAAAFF
 
@@ -199,11 +204,18 @@ void Game::MoveSpring(Spring& spring, Ball& ball) {
 
 void Game::DrawDebugText() {
 
-	ImGui::Begin("DebugWindow");
-	if (ImGui::Button("Start")) {
+	Begin("DebugWindow");
+	if (Button("Start")) {
 		isSpring = true;
 	}
-	ImGui::End();
+	if (BeginChild("Camera")) {
+		Text("Camera");
+		DragFloat3("translate", &cameraAffine_.translate.x, 0.01f);
+		DragFloat3("rotate", &cameraAffine_.rotate.x, 0.01f);
+		DragFloat3("scale", &cameraAffine_.scale.x);
+		EndChild();
+	}
+	End();
 }
 
 void Game::MainLoop() {

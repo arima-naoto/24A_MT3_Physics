@@ -48,5 +48,6 @@ private:
 	static inline const float kWindowWidth_ = 1280.0f;
 	static inline const float kWindowHeight_ = 720.0f;
 
+	
 };
 
