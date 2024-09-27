@@ -26,7 +26,7 @@ public:
 
 	void MoveRotation(Affine& camera);
 
-	void MovePendulum(Pendulum& Pendulum, Ball& ball);
+	void MovePendulum(ConicalPendulum &conicalPendulum, Ball& ball);
 
 	void CameraControl();
 
@@ -47,7 +47,7 @@ private:
 	Vector2 prevMouse;
 	Vector2 mouse;
 
-	Pendulum pendulum_;
+	ConicalPendulum conicalPendulum_;
 	Ball ball_;
 	
 	bool isPendulum = false;

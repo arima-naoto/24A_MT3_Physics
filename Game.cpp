@@ -35,12 +35,12 @@ void Game::Initialize() {
 	prevMouse = { 0,0 };
 	mouse = { 0,0 };
 
-	pendulum_ = {
-		.anchor{0.0f,1.0f,0.0f},
-		.length = 0.8f,
-		.angle = 0.7f,
-		.angularVelocity = 0.0f,
-		.angularAcceleration = 0.0f
+	conicalPendulum_ = {
+		.anchor{0.f,1.f,0.f},
+		.length{0.8f},
+		.halfApexAngle{0.7f},
+		.angle{0.0f},
+		.angularVelocity{0.0f}
 	};
 
 	ball_ = {
@@ -62,7 +62,7 @@ void Game::Update() {
 
 	Game::CameraControl();
 
-	Game::MovePendulum(pendulum_, ball_);
+	Game::MovePendulum(conicalPendulum_, ball_);
 
 	///
 	/// ↑更新処理ここまで
@@ -159,19 +159,21 @@ void Game::CameraControl() {
 
 }
 
-void Game::MovePendulum(Pendulum& pendulum, Ball& ball) {
+void Game::MovePendulum(ConicalPendulum& conicalPendulum, Ball& ball) {
 
 	if (isPendulum) {
 
-		pendulum.angularAcceleration =
-			-(9.8f / pendulum.length) * sin(pendulum.angle);
+		conicalPendulum.angularVelocity = sqrt(9.8f / (conicalPendulum.length * cos(conicalPendulum.halfApexAngle)));
 
-		pendulum.angularVelocity += pendulum.angularAcceleration * deltaTime;
-		pendulum.angle += pendulum.angularVelocity * deltaTime;
+		conicalPendulum.angle += conicalPendulum.angularVelocity * deltaTime;
 
-		ball.position.x = pendulum.anchor.x + sin(pendulum.angle) * pendulum.length;
-		ball.position.y = pendulum.anchor.y - cos(pendulum.angle) * pendulum.length;
-		ball.position.z = pendulum.anchor.z;
+		float radius = sin(conicalPendulum.halfApexAngle) * conicalPendulum.length;
+		float height = cos(conicalPendulum.halfApexAngle) * conicalPendulum.length;
+
+		ball.position.x = conicalPendulum.anchor.x + cos(conicalPendulum.angle) * radius;
+		ball.position.y = conicalPendulum.anchor.y - height;
+		ball.position.z = conicalPendulum.anchor.z - sin(conicalPendulum.angle) * radius;
+
 	}
 }
 
@@ -189,7 +191,7 @@ void Game::DrawDebugText() {
 void Game::DrawAxis() {
 
 	Vector3 localAxis[2];
-	localAxis[0] = { pendulum_.anchor };
+	localAxis[0] = { conicalPendulum_.anchor };
 	localAxis[1] = { ball_.position };
 
 	Vector3 screenAxis[2];
