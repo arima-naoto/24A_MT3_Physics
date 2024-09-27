@@ -35,7 +35,7 @@ void Game::Initialize() {
 	prevMouse = { 0,0 };
 	mouse = { 0,0 };
 
-	pendulum = {
+	pendulum_ = {
 		.anchor{0.0f,1.0f,0.0f},
 		.length = 0.8f,
 		.angle = 0.7f,
@@ -44,7 +44,7 @@ void Game::Initialize() {
 	};
 
 	ball_ = {
-		.position = {0.48f,0.42f,0.0f},
+		.position = {0.52f,0.39f,0.0f},
 		.mass = 2.0f,
 		.radius = 0.05f,
 		.color = BLUE
@@ -62,6 +62,8 @@ void Game::Update() {
 
 	Game::CameraControl();
 
+	Game::MovePendulum(pendulum_, ball_);
+
 	///
 	/// ↑更新処理ここまで
 	///
@@ -78,8 +80,8 @@ void Game::Draw() {
 
 	Sphere sphere = { {ball_.position }, ball_.radius };
 	Graphics::DrawSphere(sphere, camera_->GetViewProjectionMatrix(), camera_->GetViewportMatrix(), BLUE);
-	
 
+	Game::DrawAxis();
 
 	Game::DrawDebugText();
 
@@ -157,6 +159,21 @@ void Game::CameraControl() {
 
 }
 
+void Game::MovePendulum(Pendulum& pendulum, Ball& ball) {
+
+	if (isPendulum) {
+
+		pendulum.angularAcceleration =
+			-(9.8f / pendulum.length) * sin(pendulum.angle);
+
+		pendulum.angularVelocity += pendulum.angularAcceleration * deltaTime;
+		pendulum.angle += pendulum.angularVelocity * deltaTime;
+
+		ball.position.x = pendulum.anchor.x + sin(pendulum.angle) * pendulum.length;
+		ball.position.y = pendulum.anchor.y - cos(pendulum.angle) * pendulum.length;
+		ball.position.z = pendulum.anchor.z;
+	}
+}
 
 
 void Game::DrawDebugText() {
@@ -167,6 +184,20 @@ void Game::DrawDebugText() {
 	}
 	DragFloat3("translate", &ball_.position.x, 0.01f);
 	End();
+}
+
+void Game::DrawAxis() {
+
+	Vector3 localAxis[2];
+	localAxis[0] = { pendulum_.anchor };
+	localAxis[1] = { ball_.position };
+
+	Vector3 screenAxis[2];
+	screenAxis[0] = Transform(Transform(localAxis[0], camera_->GetViewProjectionMatrix()), camera_->GetViewportMatrix());
+	screenAxis[1] = Transform(Transform(localAxis[1], camera_->GetViewProjectionMatrix()), camera_->GetViewportMatrix());
+
+	Novice::DrawLine((int)screenAxis[0].x, (int)screenAxis[0].y, (int)screenAxis[1].x, (int)screenAxis[1].y, WHITE);
+
 }
 
 void Game::MainLoop() {

@@ -26,9 +26,13 @@ public:
 
 	void MoveRotation(Affine& camera);
 
+	void MovePendulum(Pendulum& Pendulum, Ball& ball);
+
 	void CameraControl();
 
 	void DrawDebugText();
+
+	void DrawAxis();
 
 	void MainLoop();
 
@@ -43,10 +47,12 @@ private:
 	Vector2 prevMouse;
 	Vector2 mouse;
 
-	Pendulum pendulum;
+	Pendulum pendulum_;
 	Ball ball_;
 	
 	bool isPendulum = false;
+
+	float deltaTime = 1.f / 60.f;
 
 };
 
