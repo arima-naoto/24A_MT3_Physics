@@ -27,8 +27,6 @@ public:
 
 	void CameraControl();
 
-	void MoveSpring(Spring& spring, Ball& ball);
-
 	void DrawDebugText();
 
 	void MainLoop();
@@ -44,10 +42,17 @@ private:
 	Vector2 prevMouse;
 	Vector2 mouse;
 
-	Spring spring_;
 	Ball ball_;
-	
-	bool isSpring = false;
+
+	Vector3 center_ = {0.0f,0.0f,0.0f};
+
+	bool isCircleMove = false;
+
+	float deltaTime = 1.f / 90.f;
+
+	float radius = 8;
+
+	float theta = 0;
 
 };
 
