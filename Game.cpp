@@ -35,15 +35,16 @@ void Game::Initialize() {
 	prevMouse = { 0,0 };
 	mouse = { 0,0 };
 
-	spring_ = {
-		.anchor = { 0,1,0 },
-	    .naturalLenght = 0.7f,
-	    .stiffness = 100.0f,
-		.dampingCoefficient = 2.0f
+	pendulum = {
+		.anchor{0.0f,1.0f,0.0f},
+		.length = 0.8f,
+		.angle = 0.7f,
+		.angularVelocity = 0.0f,
+		.angularAcceleration = 0.0f
 	};
 
 	ball_ = {
-		.position = {0.8f,0.2f,0.0f},
+		.position = {0.48f,0.42f,0.0f},
 		.mass = 2.0f,
 		.radius = 0.05f,
 		.color = BLUE
@@ -61,8 +62,6 @@ void Game::Update() {
 
 	Game::CameraControl();
 
-	Game::MoveSpring(spring_, ball_);
-
 	///
 	/// ↑更新処理ここまで
 	///
@@ -79,16 +78,8 @@ void Game::Draw() {
 
 	Sphere sphere = { {ball_.position }, ball_.radius };
 	Graphics::DrawSphere(sphere, camera_->GetViewProjectionMatrix(), camera_->GetViewportMatrix(), BLUE);
+	
 
-	Vector3 localAxis[2];
-	localAxis[0] = { spring_.anchor };
-	localAxis[1] = { ball_.position };
-
-	Vector3 screenAxis[2];
-	screenAxis[0] = Transform(Transform(localAxis[0], camera_->GetViewProjectionMatrix()), camera_->GetViewportMatrix());
-	screenAxis[1] = Transform(Transform(localAxis[1], camera_->GetViewProjectionMatrix()), camera_->GetViewportMatrix());
-
-	Novice::DrawLine((int)screenAxis[0].x, (int)screenAxis[0].y, (int)screenAxis[1].x, (int)screenAxis[1].y, WHITE);
 
 	Game::DrawDebugText();
 
@@ -166,55 +157,15 @@ void Game::CameraControl() {
 
 }
 
-void Game::MoveSpring(Spring& spring, Ball& ball) {
 
-	Vector3 diff = ball.position - spring.anchor;
-	
-	float length = Calculator::Length(diff);
-
-	const Vector3 kGravity = { 0.0f,-9.8f,0.0f };
-
-	if (isSpring == true && length != 0.0f) {
-
-		Vector3 direction = Calculator::Normalize(diff);
-
-		Vector3 restPosition = spring.anchor + direction * spring.naturalLenght;
-
-		Vector3 displacement = length * (ball.position - restPosition);
-
-		Vector3 restoringForce = -spring.stiffness * displacement;
-
-		Vector3 dampingForce = -spring.dampingCoefficient * ball.velocity;
-
-		Vector3 force = restoringForce + dampingForce + kGravity;
-
-		ball.acceletation = force / ball.mass;
-
-	}
-	else {
-		return;
-	}
-	
-	float deltaTime = 1.f / 60.f;
-
-	ball.velocity += ball.acceletation * deltaTime;
-	ball.position += ball.velocity * deltaTime;
-
-}
 
 void Game::DrawDebugText() {
 
 	Begin("DebugWindow");
 	if (Button("Start")) {
-		isSpring = true;
+		isPendulum = true;
 	}
-	if (BeginChild("Camera")) {
-		Text("Camera");
-		DragFloat3("translate", &cameraAffine_.translate.x, 0.01f);
-		DragFloat3("rotate", &cameraAffine_.rotate.x, 0.01f);
-		DragFloat3("scale", &cameraAffine_.scale.x);
-		EndChild();
-	}
+	DragFloat3("translate", &ball_.position.x, 0.01f);
 	End();
 }
 

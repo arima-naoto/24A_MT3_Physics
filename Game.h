@@ -28,8 +28,6 @@ public:
 
 	void CameraControl();
 
-	void MoveSpring(Spring& spring, Ball& ball);
-
 	void DrawDebugText();
 
 	void MainLoop();
@@ -45,10 +43,10 @@ private:
 	Vector2 prevMouse;
 	Vector2 mouse;
 
-	Spring spring_;
+	Pendulum pendulum;
 	Ball ball_;
 	
-	bool isSpring = false;
+	bool isPendulum = false;
 
 };
 

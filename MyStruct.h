@@ -83,6 +83,14 @@ struct Spring
 	float dampingCoefficient;
 };
 
+struct Pendulum {
+	Vector3 anchor;
+	float length;
+	float angle;
+	float angularVelocity;
+	float angularAcceleration;
+};
+
 struct Ball
 {
 	Vector3 position;
